@@ -5,16 +5,16 @@ import java.util.List;
 /**
  * Created by Javi on 02/07/2015.
  */
-public class SerieInfo {
+public class Serie {
     private String id;
     private String title;
-    private List<String> seasons;
+    private List<Season> seasons;
 
-    public SerieInfo(String id, String title) {
+    public Serie(String id, String title) {
         this.id = id;
         this.title = title;
     }
-    private SerieInfo(){
+    private Serie(){
 
     }
 
@@ -34,40 +34,40 @@ public class SerieInfo {
         this.title = title;
     }
 
-    public List<String> getSeasons() {
+    public List<Season> getSeasons() {
         return seasons;
     }
 
-    public void setSeasons(List<String> seasons) {
+    public void setSeasons(List<Season> seasons) {
         this.seasons = seasons;
     }
 
     public static class SerieBuilder{
-        private SerieInfo serie = new SerieInfo();
+        private Serie serie = new Serie();
         private SerieBuilder (){
 
         }
         public static SerieBuilder create(){
             return new SerieBuilder();
         }
-        public SerieBuilder withSerieInfo(SerieInfo serie){
+        public SerieBuilder withSerieInfo(Serie serie){
             this.serie.id = serie.getId();
             this.serie.title = serie.getTitle();
             this.serie.seasons = serie.getSeasons();
             return this;
         }
-        public SerieBuilder withSeasons(List<String> seasons){
+        public SerieBuilder withSeasons(List<Season> seasons){
             this.serie.seasons = seasons;
             return this;
         }
-        public SerieInfo build(){
+        public Serie build(){
             return serie;
         }
     }
 
     @Override
     public String toString() {
-        return "SerieInfo{" +
+        return "Serie{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", seasons=" + seasons +
