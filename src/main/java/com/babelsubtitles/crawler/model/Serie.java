@@ -1,4 +1,4 @@
-package com.babelsubtitles.crawler;
+package com.babelsubtitles.crawler.model;
 
 import java.util.List;
 
@@ -10,12 +10,18 @@ public class Serie {
     private String title;
     private List<Season> seasons;
 
-    public Serie(String id, String title) {
+    public Serie(String id, String title, List<Season> seasons) {
         this.id = id;
         this.title = title;
+        this.seasons = seasons;
     }
     private Serie(){
 
+    }
+
+    public Serie(String id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
     public String getId() {
@@ -49,6 +55,10 @@ public class Serie {
         }
         public static SerieBuilder create(){
             return new SerieBuilder();
+        }
+        public SerieBuilder withId(String id){
+            this.serie.id=id;
+            return this;
         }
         public SerieBuilder withSerieInfo(Serie serie){
             this.serie.id = serie.getId();

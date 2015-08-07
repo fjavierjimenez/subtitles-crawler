@@ -2,11 +2,12 @@ package com.babelsubtitles.crawler.extractor;
 
 import com.babelsubtitles.crawler.model.Chapter;
 import com.babelsubtitles.crawler.model.Serie;
+import io.vertx.rxjava.core.buffer.Buffer;
 import rx.Observable;
 
 /**
- * Created by Javi on 12/07/2015.
+ * Created by Javi on 02/08/2015.
  */
-public interface ChapterExtractor {
-    Observable<Chapter> getChapters(Serie serie, Integer seasonId);
+public interface SerieExtractor {
+    Observable<Serie> getSeries(Buffer b);
 }
