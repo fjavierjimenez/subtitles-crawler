@@ -23,8 +23,8 @@ public class ChapterExtractorSubsWiki implements ChapterExtractor {
     private static final String CHAPTER_SUFFIX = "&season=";
 
 
-    private static final String CHAPTER_RE= "(<table width=\"80%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">.*?<tr>(.*?<a href=\'(http://www.subswiki.com/serie/.*?/.*?/(.*?)/.*?)\'.*?>(.*?)</a>.*?)</tr>(.*?)</table>)";
-    private static final String VERSION_REGEX = ".*?Versi&oacute;n(.*?)</td>.*?</tr>(.*?)<td colspan=\"3\" class=\"newsClaro\">";
+    private static final String CHAPTER_RE= "(<table width=\"80%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">.*?<tr>(.*?<a href=\'(http:\\/\\/www\\.subswiki\\.com\\/serie\\/.*?\\/.*?\\/(.*?)\\/.*?)\'.*?>(.*?)<\\/a>.*?)<\\/tr>(.*?)<\\/table>)";
+    private static final String VERSION_REGEX = ".*?Versi&oacute;n(.*?)</td>.*?</tr>(.*?)(<td colspan=\"3\" class=\"newsClaro\">|<td colspan=\"7\">&nbsp;<\\/td>)";
     private static final String SUBTITLE_REGEX ="<td width=\"41%\" class=\"language\">(.*?)</td>.*?<a href=\"(.*?)\">";
 
     private Pattern patternChapter = Pattern.compile(CHAPTER_RE, Pattern.DOTALL + Pattern.MULTILINE);
@@ -64,7 +64,8 @@ public class ChapterExtractorSubsWiki implements ChapterExtractor {
             String url = matcher.group(3);
             String id = matcher.group(4);
             String name = matcher.group(5);
-            chapters.addAll(extractVersions(url, id, name, matcher.group(6)));
+            List<Chapter> chapters2 = extractVersions(url, id, name, matcher.group(6));
+            chapters.addAll(chapters2);
         }
         return chapters;
     }
