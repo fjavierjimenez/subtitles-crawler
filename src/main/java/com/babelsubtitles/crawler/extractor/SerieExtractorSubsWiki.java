@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,13 @@ public class SerieExtractorSubsWiki implements SerieExtractor{
     public Observable<Serie> getSeries(Buffer b) {
         Observable<Serie> serieObservable = extractSeriesIds(b);
         return serieObservable
-                .flatMap(serie-> {
+                .observeOn(Schedulers.io()) //Not sure if this is the best way to get concurrency with rxjava
+                .flatMap(serie -> {
                     Observable<Serie> observable = Observable.<Serie>create(subscriber -> {
                         Observable<Season> seasonObservable = extractSeasons(serie);
                         seasonObservable.toList().subscribe(
                                 seasons -> subscriber.onNext(new Serie(serie.getId(), serie.getTitle(), seasons)),
-                                error-> subscriber.onError(error));
+                                error -> subscriber.onError(error));
                     });
                     return observable;
                 });
